@@ -40,7 +40,7 @@ Parameters:
 
   GitHubUser:
     Type: String
-    Default: SudKul
+    Default: vanessamwaniki
     Description: GitHub username or organization
     MinLength: 3
     MaxLength: 100
@@ -119,6 +119,7 @@ Resources:
         ZipFile: |
           import json
           import boto3
+          import cfnresponse
           from botocore.vendored import requests
           def handler(event, context):
             response = {
@@ -130,6 +131,7 @@ Resources:
               'LogicalResourceId': event['LogicalResourceId'],
               'Data': {"Message": "Resource creation successful!"},
             }
+            cfnresponse.send(event, context, cfnresponse.SUCCESS, response, "CustomResourcePhysicalID")
 
             client = boto3.client('iam')
             try:
